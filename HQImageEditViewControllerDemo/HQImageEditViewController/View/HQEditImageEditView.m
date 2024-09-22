@@ -21,7 +21,7 @@
         self.margin = margin;
         self.previewSize = size;
         
-        [self addSubview:self.maskView];
+        [self addSubview:self.hqMaskView];
         [self addSubview:self.preView];
         
         [self.preView addSubview:self.lineWrap];
@@ -33,7 +33,7 @@
 }
 
 - (void)makeConstraints {
-    [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.hqMaskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(-self.margin.top));
         make.left.equalTo(@(-self.margin.left));
         make.width.equalTo(@(self.previewSize.width + self.margin.left + self.margin.right));
@@ -54,14 +54,14 @@
 - (void)maskViewShowWithDuration:(CGFloat)duration {
     if (self.maskViewAnimation) {
         [UIView animateWithDuration:duration animations:^{
-            self.maskView.alpha = 1;
+            self.hqMaskView.alpha = 1;
         }];
     }
 }
 - (void)maskViewHideWithDuration:(CGFloat)duration {
     if (self.maskViewAnimation) {
         [UIView animateWithDuration:duration animations:^{
-            self.maskView.alpha = 0;
+            self.hqMaskView.alpha = 0;
         }];
     }
 }
@@ -204,21 +204,21 @@
     return _preView;
 }
 
-- (UIView *)maskView {
-    if (!_maskView) {
-        _maskView = [[UIView alloc] init];
-        _maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:.85f];
+- (UIView *)hqMaskView {
+    if (!_hqMaskView) {
+        _hqMaskView = [[UIView alloc] init];
+        _hqMaskView.backgroundColor = [UIColor colorWithWhite:0 alpha:.85f];
         
         UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.previewSize.width + self.margin.left + self.margin.right, self.previewSize.height + self.margin.top + self.margin.bottom)];
         [path appendPath:[[UIBezierPath bezierPathWithRect:CGRectMake(self.margin.left, self.margin.top, self.previewSize.width, self.previewSize.height)] bezierPathByReversingPath]];
         
         CAShapeLayer *layer = [CAShapeLayer layer];
         layer.path = path.CGPath;
-        [_maskView.layer setMask:layer];
+        [_hqMaskView.layer setMask:layer];
         
-        _maskView.alpha = 0;
+        _hqMaskView.alpha = 0;
     }
-    return _maskView;
+    return _hqMaskView;
 }
 
 - (UIView *)lineWrap {

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id <HQEditImageEditViewDelegate> delegate;
 
-@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) UIView *hqMaskView;
 
 @property (nonatomic, strong) UIView *preView;
 @property (nonatomic, strong) UIView *lineWrap;
